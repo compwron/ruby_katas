@@ -25,6 +25,10 @@ class Clock
 	end
 	
 	def print_minute_lamps(lamps_on)
-	  puts "Y" * lamps_on + "O" * (11 - lamps_on)
+		lit_lamps = 1.upto(lamps_on).map {|lamp|
+			(lamp % 3 == 0) ? "R" : "Y"
+		}.join('')
+
+		puts lit_lamps + 'O' * (11 - lit_lamps.length)
 	end
 end

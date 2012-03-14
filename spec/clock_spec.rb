@@ -61,6 +61,15 @@ describe Clock do
 			assert_row_equals("YYROOOOOOOO")
 			Clock.new("00:15:00")
 		end
+
+		it "shows yellow lamps for minutes not divisible by five" do
+		  assert_row_equals("Y")
+		  assert_row_equals("OOOO")
+		  assert_row_equals("OOOO")
+			assert_row_equals("YYROOOOOOOO")
+			assert_row_equals("YYYO")
+			Clock.new("00:18:00")
+		end
 	end
 
 	def assert_row_equals(string)
