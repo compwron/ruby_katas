@@ -6,6 +6,7 @@ describe Clock do
       assert_row_equals("Y")
       assert_row_equals("OOOO")
       assert_row_equals("OOOO")
+		  assert_row_equals("OOOOOOOOOOO")
 			Clock.new("00:00:00")
 		end
 		
@@ -13,6 +14,7 @@ describe Clock do
 		  assert_row_equals("O")
 		  assert_row_equals("OOOO")
 		  assert_row_equals("OOOO")
+			assert_row_equals("OOOOOOOOOOO")
 			Clock.new("00:00:01")
 		end
 	end
@@ -22,6 +24,7 @@ describe Clock do
 		  assert_row_equals("Y")
 		  assert_row_equals("RROO")
 		  assert_row_equals("OOOO")
+		  assert_row_equals("OOOOOOOOOOO")
 			Clock.new("10:00:00")
 		end
 		
@@ -29,6 +32,7 @@ describe Clock do
 		  assert_row_equals("Y")
 		  assert_row_equals("RROO")
 		  assert_row_equals("ROOO")
+		  assert_row_equals("OOOOOOOOOOO")
 			Clock.new("11:00:00")
 		end
 
@@ -36,6 +40,7 @@ describe Clock do
 		  assert_row_equals("Y")
 		  assert_row_equals("RROO")
 		  assert_row_equals("RRRR")
+		  assert_row_equals("OOOOOOOOOOO")
 			Clock.new("14:00:00")
 		end
 	end
@@ -47,6 +52,14 @@ describe Clock do
 		  assert_row_equals("OOOO")
 			assert_row_equals("YYOOOOOOOOO")
 			Clock.new("00:10:00")
+		end
+		
+		it "shows red lamps for minutes on the quarter-hour" do
+		  assert_row_equals("Y")
+		  assert_row_equals("OOOO")
+		  assert_row_equals("OOOO")
+			assert_row_equals("YYROOOOOOOO")
+			Clock.new("00:15:00")
 		end
 	end
 
