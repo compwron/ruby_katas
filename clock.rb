@@ -11,7 +11,11 @@ class Clock
 	end
 	
 	def print_hours(time)
-	  r = time / 5
-	  puts "R" * (r) + "O" * (4 - r)
+	  print_lamps(time / 5)
+	  print_lamps(time % 5)
+	end
+
+	def print_lamps(lamps_on)
+		puts "R" * lamps_on + "O" * (4 - lamps_on)
 	end
 end
