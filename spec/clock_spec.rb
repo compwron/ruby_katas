@@ -7,6 +7,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("OOOO")
 		  assert_row_equals("OOOOOOOOOOO")
+		  assert_row_equals("OOOO")
 			Clock.new("00:00:00")
 		end
 		
@@ -15,6 +16,7 @@ describe Clock do
 		  assert_row_equals("OOOO")
 		  assert_row_equals("OOOO")
 			assert_row_equals("OOOOOOOOOOO")
+			assert_row_equals("OOOO")
 			Clock.new("00:00:01")
 		end
 	end
@@ -25,6 +27,7 @@ describe Clock do
 		  assert_row_equals("RROO")
 		  assert_row_equals("OOOO")
 		  assert_row_equals("OOOOOOOOOOO")
+		  assert_row_equals("OOOO")
 			Clock.new("10:00:00")
 		end
 		
@@ -33,6 +36,7 @@ describe Clock do
 		  assert_row_equals("RROO")
 		  assert_row_equals("ROOO")
 		  assert_row_equals("OOOOOOOOOOO")
+		  assert_row_equals("OOOO")
 			Clock.new("11:00:00")
 		end
 
@@ -41,6 +45,7 @@ describe Clock do
 		  assert_row_equals("RROO")
 		  assert_row_equals("RRRR")
 		  assert_row_equals("OOOOOOOOOOO")
+		  assert_row_equals("OOOO")
 			Clock.new("14:00:00")
 		end
 	end
@@ -51,6 +56,7 @@ describe Clock do
 		  assert_row_equals("OOOO")
 		  assert_row_equals("OOOO")
 			assert_row_equals("YYOOOOOOOOO")
+			assert_row_equals("OOOO")
 			Clock.new("00:10:00")
 		end
 		
@@ -59,6 +65,7 @@ describe Clock do
 		  assert_row_equals("OOOO")
 		  assert_row_equals("OOOO")
 			assert_row_equals("YYROOOOOOOO")
+			assert_row_equals("OOOO")
 			Clock.new("00:15:00")
 		end
 
