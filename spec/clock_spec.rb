@@ -12,4 +12,11 @@ describe Clock do
 			c = Clock.new("00:00:01")
 		end
 	end
+
+	context "hour lamps" do
+		it "shows four lamps on row 2 for 10am" do
+		  $stdout.should_receive(:puts).with("Y\nRROO")
+			c = Clock.new("00:10:00")
+		end
+	end
 end

@@ -8,7 +8,6 @@ class Clock
 	
 	private
 	def seconds
-	  "Y" if self.hours_minutes_seconds[2].to_i % 2 == 0
+	  (self.hours_minutes_seconds[2].to_i % 2 == 0) ? "Y" : "O"
 	end
-	
 end
