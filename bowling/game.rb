@@ -9,29 +9,27 @@ class Game
 	ROLL2_PINS = 1
 	ROLL3_PINS = 2
 
-	def frame(roll1_pins, roll2_pins, third_roll_pins=0)
-		@frames << [roll1_pins, roll2_pins, third_roll_pins]
+	def frame(roll1, roll2, roll3=0)
+		@frames << [roll1, roll2, roll3]
 		nil
 	end
 
-	def score(frame_to_score)
+	def score(frame)
 		score = 0
-		0.upto(frame_to_score - 1).each {|f|
-			roll1_score = @frames[f][ROLL1_PINS]
-			roll2_score = @frames[f][ROLL2_PINS]
-			roll3_score = @frames[f][ROLL3_PINS]
+		0.upto(frame - 1).each {|f|
+			roll1, roll2, roll3 = @frames[f][ROLL1_PINS], @frames[f][ROLL2_PINS], @frames[f][ROLL3_PINS]
 			next_frame = f + 1
 			if f < LAST_FRAME
 				next_frame_roll1 = @frames[next_frame][ROLL1_PINS]
 				next_frame_roll2 = @frames[next_frame][ROLL2_PINS]
 			end
 
-			score += roll1_score + roll2_score
-			if roll1_score == 10 # strike
+			score += roll1 + roll2
+			if roll1 == 10 # strike
 				score += next_frame_roll1 + next_frame_roll2
-			elsif roll1_score + roll2_score == 10 # spare
+			elsif roll1 + roll2 == 10 # spare
 				if f == LAST_FRAME
-					score += roll3_score
+					score += roll3
 				elsif next_frame_roll1 != 0
 					score += next_frame_roll1
 				else
