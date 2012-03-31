@@ -1,7 +1,6 @@
 require_relative "../fizzbuzz.rb"
 
 describe FizzBuzz do
-
 	before do
   	@fizbuzz = FizzBuzz.new
 	end
@@ -26,13 +25,15 @@ describe FizzBuzz do
     @fizbuzz.evaluate(5).should == 'buzz'
   end
 
+  it "when given 6" do
+    @fizbuzz.evaluate(6).should == 'fizz'
+  end
+
+  it "when given 10" do
+    @fizbuzz.evaluate(05).should == 'buzz'
+  end
+
+  it "when given 15" do
+    @fizbuzz.evaluate(15).should == 'fizzbuzz'
+  end
 end
-
-
-
-
-
-
-
-
-
