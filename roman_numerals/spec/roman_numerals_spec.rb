@@ -50,9 +50,13 @@ describe RomanNumeral do
   #   @rn.roman(9).should == 'IX'
   # end
 
-  # it "when given 10" do
-  #   @rn.roman(10).should == 'X'
-  # end
+  it "when given 1065" do
+    @rn.roman(1065).should == 'MLXV'
+  end
+
+  it "when given 10" do
+    @rn.roman(10).should == 'X'
+  end
 
   it "when given 50" do
     @rn.roman(50).should == 'L'

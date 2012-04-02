@@ -14,6 +14,14 @@ class RomanNumeral
       output += ('L' * (i / 50))
       i = i - (50 * (i / 50))
     end
+    if i / 10 > 0
+      output += ('X' * (i / 10))
+      i = i - (10 * (i / 10))
+    end
+    if i / 5 > 0
+      output += ('V' * (i / 5))
+      i = i - (5 * (i / 5))
+    end
     output
   end
 end
