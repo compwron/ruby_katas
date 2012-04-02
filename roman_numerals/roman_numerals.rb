@@ -18,9 +18,21 @@ class RomanNumeral
       output += ('X' * (i / 10))
       i = i - (10 * (i / 10))
     end
+    if i == 9 
+      output += ('IX')
+      i = i - 9
+    end
     if i / 5 > 0
       output += ('V' * (i / 5))
       i = i - (5 * (i / 5))
+    end
+    if i == 4
+      output += ('IV')
+      i = i - 4
+    end
+    if i > 0 && i < 4
+      output += ('I' * i)
+      i = i - i
     end
     output
   end
