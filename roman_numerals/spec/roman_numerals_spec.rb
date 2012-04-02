@@ -1,7 +1,7 @@
 require_relative "../roman_numerals.rb"
 
 describe RomanNumeral do
-	before do
+	before :each do
   	@rn = RomanNumeral.new
 	end
 
@@ -10,51 +10,51 @@ describe RomanNumeral do
   end
 
   it "when given 2" do
-    @rn.roman(2).should == 'II'
+   @rn.roman(2).should == 'II'
   end
 
   it "when given 3" do
-    @rn.roman(3).should == 'III'
+   @rn.roman(3).should == 'III'
   end
 
   it "when given 4" do
-    @rn.roman(4).should == 'IV'
+   @rn.roman(4).should == 'IV'
   end
 
   it "when given 5" do
-    @rn.roman(5).should == 'V'
+   @rn.roman(5).should == 'V'
   end
 
   it "when given 6" do
-    @rn.roman(6).should == 'VI'
+   @rn.roman(6).should == 'VI'
   end
 
   it "when given 7" do
-    @rn.roman(7).should == 'VII'
+   @rn.roman(7).should == 'VII'
   end
 
   it "when given 8" do
-    @rn.roman(8).should == 'VIII'
+   @rn.roman(8).should == 'VIII'
   end
 
   it "when given 9" do
-    @rn.roman(9).should == 'IX'
+   @rn.roman(9).should == 'IX'
   end
 
   it "when given 1069" do
-    @rn.roman(1069).should == 'MLXIX'
+   @rn.roman(1069).should == 'MLXIX'
   end
 
   it "when given 1065" do
-    @rn.roman(1065).should == 'MLXV'
+   @rn.roman(1065).should == 'MLXV'
   end
 
   it "when given 10" do
-    @rn.roman(10).should == 'X'
+   @rn.roman(10).should == 'X'
   end
 
   it "when given 50" do
-    @rn.roman(50).should == 'L'
+   @rn.roman(50).should == 'L'
   end
 
   it "when given 1050" do
@@ -76,5 +76,4 @@ describe RomanNumeral do
   it "when given 2000" do
     @rn.roman(2000).should == 'MM'
   end
-
 end

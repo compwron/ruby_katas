@@ -1,40 +1,18 @@
 class RomanNumeral
+  VALUE_MAPPER = {'M' => 1000, 'D' => 500, 'L' => 50, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1}
+  
+  def non_lookahead_convert letter, letter_value
+    @@output += letter * (@@i / letter_value)
+    @@i = @@i - (letter_value * (@@i  / letter_value))
+  end
+
   def roman num
-    output = ''
-    i = num
-    if i / 1000 > 0
-      output += ('M' * (i / 1000))
-      i = i - (1000 * (i / 1000))
-    end
-    if i / 500 > 0
-      output += ('D' * (i / 500))
-      i = i - (500 * (i / 500))
-    end
-    if i / 50 > 0
-      output += ('L' * (i / 50))
-      i = i - (50 * (i / 50))
-    end
-    if i / 10 > 0
-      output += ('X' * (i / 10))
-      i = i - (10 * (i / 10))
-    end
-    if i == 9 
-      output += ('IX')
-      i = i - 9
-    end
-    if i / 5 > 0
-      output += ('V' * (i / 5))
-      i = i - (5 * (i / 5))
-    end
-    if i == 4
-      output += ('IV')
-      i = i - 4
-    end
-    if i > 0 && i < 4
-      output += ('I' * i)
-      i = i - i
-    end
-    output
+    @@output = ''
+    @@i = num
+
+    VALUE_MAPPER.each {|letter, letter_value| 
+      non_lookahead_convert letter, letter_value
+    }
+    @@output
   end
 end
-
