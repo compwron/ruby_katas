@@ -1,12 +1,12 @@
 require_relative "../roman_numerals.rb"
 
 describe RomanNumeral do
-	before :each do
-  	@rn = RomanNumeral.new
-	end
+  before :each do
+    @rn = RomanNumeral.new
+  end
 
   it "when given 1" do
-  	@rn.roman(1).should == 'I'
+    @rn.roman(1).should == 'I'
   end
 
   it "when given 2" do
