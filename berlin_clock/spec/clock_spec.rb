@@ -8,7 +8,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("OOOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("00:00:00")
+      Clock.new.lamps("00:00:00")
     end
 
     it "is off on odd-numbered seconds" do
@@ -17,7 +17,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("OOOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("00:00:01")
+      Clock.new.lamps("00:00:01")
     end
   end
 
@@ -28,7 +28,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("OOOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("10:00:00")
+      Clock.new.lamps("10:00:00")
     end
 
     it "shows lamps on both rows for 11am" do
@@ -37,7 +37,7 @@ describe Clock do
       assert_row_equals("ROOO")
       assert_row_equals("OOOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("11:00:00")
+      Clock.new.lamps("11:00:00")
     end
 
     it "shows lamps on both rows for 2pm" do
@@ -46,7 +46,7 @@ describe Clock do
       assert_row_equals("RRRR")
       assert_row_equals("OOOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("14:00:00")
+      Clock.new.lamps("14:00:00")
     end
   end
 
@@ -57,7 +57,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("YYOOOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("00:10:00")
+      Clock.new.lamps("00:10:00")
     end
 
     it "shows red lamps for minutes on the quarter-hour" do
@@ -66,7 +66,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("YYROOOOOOOO")
       assert_row_equals("OOOO")
-      Clock.new("00:15:00")
+      Clock.new.lamps("00:15:00")
     end
 
     it "shows yellow lamps for minutes not divisible by five" do
@@ -75,7 +75,7 @@ describe Clock do
       assert_row_equals("OOOO")
       assert_row_equals("YYROOOOOOOO")
       assert_row_equals("YYYO")
-      Clock.new("00:18:00")
+      Clock.new.lamps("00:18:00")
     end
 
     it "shows time paired" do
@@ -84,7 +84,7 @@ describe Clock do
       assert_row_equals("RROO")
       assert_row_equals("YYRYYROOOOO")
       assert_row_equals("OOOO")
-      Clock.new("02:30:01")
+      Clock.new.lamps("02:30:01")
     end
   end
 

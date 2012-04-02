@@ -4,7 +4,7 @@ class Clock
   YELLOW = "Y"
   OFF    = "O"
   
-  def initialize(time_string)
+  def lamps(time_string)
     hours_minutes_seconds = time_string.split(":")
     print_seconds(hours_minutes_seconds[2].to_i)
     print_hours(hours_minutes_seconds[0].to_i)
