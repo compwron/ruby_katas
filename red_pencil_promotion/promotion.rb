@@ -5,12 +5,19 @@ class Promotion
   end
 
   def stable?
-    old_price = @price_history.last
-    stable = true
-    (@price_history.length - 1).downto(@price_history.length - 30) do |price|
-      stable = false unless @price_history[price] == old_price 
-    end
+    stable = false
+    price_stability_checker = {}
+    @price_history.each { |price|
+      if price_stability_checker[price] 
+        price_stability_checker[price] += 1
+      else
+        price_stability_checker[price] = 1
+      end
+    }
+    price_stability_checker.each { |price, occurrences|
+      if occurrences >= 30 then stable = true end
+    }
     stable
   end
-
+   
 end
