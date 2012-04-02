@@ -11,7 +11,6 @@ class Clock
     print_minutes(hours_minutes_seconds[1].to_i)
   end
   
-  private
   def print_seconds(time)
     puts (time % 2 == 0) ? YELLOW : OFF
   end
