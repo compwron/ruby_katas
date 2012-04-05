@@ -28,16 +28,33 @@ describe Promotion do
     promo.stable?.should == true
   end
 
-  # it "price reduction is between 5 and 30 percent of stable price"
-  #   price_history = []
-  #   30.times { price_history << 100 }
-  #   price_history << 90
-  #   promo = Promotion.new price_history
-  #   promo.price_increase_valid_for_promotion?.should == true
+  it "price reduction is between 5 and 30 percent of stable price" do
+    price_history = []
+    30.times { price_history << 100 }
+    price_history << 90
+    promo = Promotion.new price_history
+    promo.price_increase_valid_for_promotion?.should == true
 
-  #   30.times { price_history << 100 }
-  #   price_history << 2
-  #   promo = Promotion.new price_history
-  #   promo.price_increase_valid_for_promotion?.should == false
-  # end
+    30.times { price_history << 100 }
+    price_history << 2
+    promo = Promotion.new price_history
+    promo.price_increase_valid_for_promotion?.should == false
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

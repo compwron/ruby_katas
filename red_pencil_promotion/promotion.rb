@@ -19,5 +19,15 @@ class Promotion
     }
     stable
   end
+
+# assume that last price is the increase and that all the ones before that are stable
+  def price_increase_valid_for_promotion?
+    promotion_triggering_price = @price_history[-2]
+    if 0.70 * promotion_triggering_price < @price_history.last && @price_history.last <= 0.95 * promotion_triggering_price
+      true
+    else
+      false
+    end
+  end
    
 end
