@@ -33,12 +33,12 @@ describe Promotion do
     30.times { price_history << 100 }
     price_history << 90
     promo = Promotion.new price_history
-    promo.price_increase_valid_for_promotion?.should == true
+    promo.price_decrease_valid_for_promotion?.should == true
 
     30.times { price_history << 100 }
     price_history << 2
     promo = Promotion.new price_history
-    promo.price_increase_valid_for_promotion?.should == false
+    promo.price_decrease_valid_for_promotion?.should == false
   end
 
   it "red pencil sale lasts no longer than 30 days" do
@@ -56,21 +56,13 @@ describe Promotion do
     promo = Promotion.new price_history
     promo.red_pencil_sale?.should == false
   end
+
+  it "if price goes down during sale, sale is not prolonged." do
+    price_history = []
+    30.times { price_history << 100 }
+    30.times { price_history << 90 }
+    30.times { price_history << 80 }
+    promo = Promotion.new price_history
+    promo.price_decrease_valid_for_promotion?.should == false
+  end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

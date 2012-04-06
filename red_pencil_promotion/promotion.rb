@@ -20,8 +20,8 @@ class Promotion
     stable
   end
 
-# assume that last price is the increase and that all the ones before that are stable
-  def price_increase_valid_for_promotion?
+# assume that last price is the decrease and that all the ones before that are stable
+  def price_decrease_valid_for_promotion?
     promotion_triggering_price = @price_history[-2]
     if 0.70 * promotion_triggering_price < @price_history.last && @price_history.last <= 0.95 * promotion_triggering_price
       true
@@ -34,39 +34,9 @@ class Promotion
     # p @price_history
     days_on_sale = 0
     @price_history.each {|i|
-      days_on_sale += 1 if i == @price_history.last #&& i == @price_history[i -1]
+      days_on_sale += 1 if i == @price_history.last 
       return false if days_on_sale > 30 
     }
     true
-    # !1.upto(30).map { |i| 
-    #   sale_valid = false unless @price_history.last == @price_history[-1 - i] 
-    #   days_on_sale += 1 if @price_history.last == @price_history[-1 - i] 
-    # }.include? false
-    
   end
-   
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
