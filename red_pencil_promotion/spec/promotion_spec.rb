@@ -17,14 +17,6 @@ describe Promotion do
     Promotion.new.stable?(price_history).should == false
   end
 
-  it "finds whether price is stable in the middle of change" do
-    price_history = []
-    2.times { price_history << 200 }
-    30.times { price_history << 100 }
-    3.times { price_history <<  90 }
-    Promotion.new.stable?(price_history).should == true
-  end
-
   it "price reduction is between 5 and 30 percent of stable price" do
     price_history = []
     30.times { price_history << 100 }
