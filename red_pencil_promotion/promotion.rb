@@ -29,5 +29,44 @@ class Promotion
       false
     end
   end
+
+  def red_pencil_sale?
+    # p @price_history
+    days_on_sale = 0
+    @price_history.each {|i|
+      days_on_sale += 1 if i == @price_history.last #&& i == @price_history[i -1]
+      return false if days_on_sale > 30 
+    }
+    true
+    # !1.upto(30).map { |i| 
+    #   sale_valid = false unless @price_history.last == @price_history[-1 - i] 
+    #   days_on_sale += 1 if @price_history.last == @price_history[-1 - i] 
+    # }.include? false
+    
+  end
    
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

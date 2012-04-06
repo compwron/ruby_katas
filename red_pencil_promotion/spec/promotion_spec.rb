@@ -40,6 +40,22 @@ describe Promotion do
     promo = Promotion.new price_history
     promo.price_increase_valid_for_promotion?.should == false
   end
+
+  it "red pencil sale lasts no longer than 30 days" do
+    price_history = []
+    30.times { price_history << 100 }
+    29.times { price_history << 90 }
+    promo = Promotion.new price_history
+    promo.red_pencil_sale?.should == true
+    
+    price_history << 90
+    promo = Promotion.new price_history
+    promo.red_pencil_sale?.should == true
+
+    price_history << 90
+    promo = Promotion.new price_history
+    promo.red_pencil_sale?.should == false
+  end
 end
 
 
