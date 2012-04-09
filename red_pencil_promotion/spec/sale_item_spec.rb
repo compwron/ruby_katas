@@ -11,8 +11,7 @@ describe SaleItem do
   	subject.stable?([2] + [1] * 30).should == true
   	subject.stable?([2] + [1] * 30 + [3]).should == false
   	subject.stable?([1] * 28).should == false
-  	strange_history = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 90, 90]
-  	subject.stable?(strange_history).should == false
+  	subject.stable?([[100] * 31 + [90] * 2]).should == false
   end
 
   it "sale-valid price change is between 5 and 30% downwards" do
