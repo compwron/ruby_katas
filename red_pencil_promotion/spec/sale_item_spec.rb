@@ -42,9 +42,8 @@ describe SaleItem do
 	  end
 
 	  it "is ended immediately by price decrease to below 30% of original price" do
-	  	subject.get_position_of_most_recent_stable_price([100] * 30 + [90]).should == 29
-	  	subject.get_position_of_most_recent_stable_price([101] + [100] * 30 + [90]).should == 30
-	  	subject.get_position_of_most_recent_stable_price([101] * 30 + [100] * 30 + [90]).should == 59
+	  	subject.price_decreases_below_threshhold?([100] * 30 + [90] * 25 + [50]).should == true
+	  	# subject.price_decreases_below_threshhold?([101] * 30 + [100] * 30 + [90]).should == false
 
 	  	# subject.find_price_before_sale([100] * 30 + [90] * 25 + [89]).should == 100
 	  	# subject.price_decreases_below_threshhold([100] * 30 + [90] * 25 + [89]).should == false
@@ -52,5 +51,13 @@ describe SaleItem do
 	  	# subject.price_decreases_below_threshhold([100] * 30 + [90] * 25 + [69]).should == true
 	  end
 	end
+	
+	it "find most recent stable price" do
+		subject.get_position_of_most_recent_stable_price([100] * 30 + [90]).should == 29
+  	subject.get_position_of_most_recent_stable_price([101] + [100] * 30 + [90]).should == 30
+  	subject.get_position_of_most_recent_stable_price([101] * 30 + [100] * 30 + [90]).should == 59
+	end
+
+
 end
 
