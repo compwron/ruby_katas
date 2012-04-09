@@ -32,7 +32,6 @@ class SaleItem
 
   def no_overlap_with_previous_sale price_history
   	return false unless price_history.length >= 90
-
 		stable?(price_history[0..STABLE_LOCATION]) && 
 			stable?(price_history[STABLE_LOCATION..STABLE*2]) && 
 				stable?(price_history[STABLE*2..STABLE*3 -1]) && 
@@ -50,7 +49,7 @@ class SaleItem
   end
 
   def price_decreases_below_threshold? price_history
-		last_stable_position = get_position_of_most_recent_stable_price(price_history)
+		last_stable_position = position_of_most_recent_stable_price(price_history)
 		lowest_valid_sale_price = BOTTOM_SALE_PRICE_PERCENTAGE * price_history[last_stable_position]
 		last_stable_position.upto(price_history.length - 1).each do |i|
 			return true if price_history[i] <= lowest_valid_sale_price
@@ -58,7 +57,7 @@ class SaleItem
 		false
   end
 
-  def get_position_of_most_recent_stable_price price_history
+  def position_of_most_recent_stable_price price_history
   	threshold = 0
   	length_of_history = price_history.length - 1
 		STABLE_LOCATION.upto(length_of_history).each do |i|

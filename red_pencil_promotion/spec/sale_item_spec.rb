@@ -78,13 +78,12 @@ describe SaleItem do
 	end
 	
 	it "find most recent stable price" do
-		subject.get_position_of_most_recent_stable_price(@valid_decrease).should == 30
+		subject.position_of_most_recent_stable_price(@valid_decrease).should == 30
 	end
 
 	it "second red sale must follow a stable period which does not intersect with a previous red sale" do
 		subject.valid_red_sale_start?(@valid_second_sale).should == true
 		subject.valid_red_sale_start?(@invalid_second_sale).should == false
 		# subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
-
 	end
 end
