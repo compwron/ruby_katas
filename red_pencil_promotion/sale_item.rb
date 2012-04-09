@@ -20,7 +20,12 @@ class SaleItem
   end 
 
   def red_sale_ends_today? price_history
+  	return true unless sale_ends_if_price_increases(price_history) == false
   	pre_sale_price_history = price_history[0..price_history.count - 1 - STABLE]
-  	stable?(price_history) && stable?(pre_sale_price_history)
+  	stable?(pre_sale_price_history) 
   end	
+
+  def sale_ends_if_price_increases price_history
+  	price_history.last > price_history[-2] ? true : false
+  end
 end

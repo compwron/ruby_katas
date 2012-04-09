@@ -31,5 +31,16 @@ describe SaleItem do
   	subject.red_sale_ends_today?([100] * 31 + [90] * 30).should == true
   	subject.red_sale_ends_today?([100] * 31 + [90] * 31).should == false
   end
+
+  it "red sale is not prolonged by reduction during sale" do
+  	subject.red_sale_ends_today?([100] * 30 + [90] * 29 + [80]).should == true
+  	# subject.valid_red_sale_start?([100] * 30 + [90] * 30 + [80]).should == false
+  end
+
+  it "red sale is ended immediately by price increase" do
+  	subject.red_sale_ends_today?([100] * 30 + [90] * 25 + [91]).should == true
+  	subject.red_sale_ends_today?([100] * 30 + [90] * 28 + [89]).should == false
+  	subject.red_sale_ends_today?([100] * 30 + [90] * 29 + [89]).should == true
+  end
 end
 
