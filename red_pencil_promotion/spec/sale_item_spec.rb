@@ -25,6 +25,10 @@ describe SaleItem do
 
   	@too_large_decrease_during_sale = [100] * 30 + [90] * 25 + [50]
   	@valid_decrease_during_sale = [100] * 30 + [90] * 25 + [89]
+
+  	@valid_second_sale = [100] * 30 + [90] * 30 + [90] * 30 + [81]
+		@invalid_second_sale = [100] * 30 + [90] * 30 + [81]
+		@valid_second_sale_history_preceeded_by_instability = [2] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
   end
 
   context "price" do
@@ -75,5 +79,12 @@ describe SaleItem do
 	
 	it "find most recent stable price" do
 		subject.get_position_of_most_recent_stable_price(@valid_decrease).should == 30
+	end
+
+	it "second red sale must follow a stable period which does not intersect with a previous red sale" do
+		subject.valid_red_sale_start?(@valid_second_sale).should == true
+		subject.valid_red_sale_start?(@invalid_second_sale).should == false
+		# subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
+
 	end
 end

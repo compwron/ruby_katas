@@ -20,10 +20,24 @@ class SaleItem
   end
 
   def valid_red_sale_start? price_history
-  	second_most_recent_price_location = price_history.count + SECOND_MOST_RECENT_ARRAY_LOCATION
-  	price_history_yesterday = price_history[0..second_most_recent_price_location]
-  	valid_decrease?(price_history) && stable?(price_history_yesterday)
+  	yesterday_hist = price_history_yesterday(price_history)
+  	valid = valid_decrease?(price_history) && stable?(yesterday_hist) 
+  	price_history.length >= 60 ? (no_overlap_with_previous_sale(price_history) && valid) : valid
   end 
+
+  def price_history_yesterday price_history
+  	second_most_recent_price_location = price_history.count + SECOND_MOST_RECENT_ARRAY_LOCATION
+  	price_history[0..second_most_recent_price_location]
+  end
+
+  def no_overlap_with_previous_sale price_history
+  	return false unless price_history.length >= 90
+
+		stable?(price_history[0..STABLE_LOCATION]) && 
+			stable?(price_history[STABLE_LOCATION..STABLE*2]) && 
+				stable?(price_history[STABLE*2..STABLE*3 -1]) && 
+					valid_decrease?(price_history)
+  end
 
   def red_sale_ends_today? price_history
   	price_increased_during_sale?(price_history) || 
