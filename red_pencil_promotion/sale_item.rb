@@ -36,24 +36,23 @@ class SaleItem
   end
 
   def price_decreases_below_threshold? price_history
-		threshold = get_position_of_most_recent_stable_price price_history
-		lowest_valid_sale_price = BOTTOM_SALE_PRICE_PERCENTAGE * price_history[threshold]
-			threshold.upto(price_history.length - 1).map do |i|
-				return true if price_history[i] <= lowest_valid_sale_price
-			end
+		last_stable_position = get_position_of_most_recent_stable_price(price_history)
+		lowest_valid_sale_price = BOTTOM_SALE_PRICE_PERCENTAGE * price_history[last_stable_position]
+		last_stable_position.upto(price_history.length - 1).each do |i|
+			return true if price_history[i] <= lowest_valid_sale_price
+		end
 		false
   end
 
   def get_position_of_most_recent_stable_price price_history
   	threshold = 0
   	length_of_history = price_history.length - 1
-		(STABLE - 1).upto(length_of_history).each {|i|
-			if stable?(price_history[0..i]) then threshold = i end
-		}
-		threshold
+		STABLE_LOCATION.upto(length_of_history).each do |i|
+			return i + 1 if stable?(price_history[0..i]) # off by 1 error?
+		end
   end
 
-  def sale_has_lasted_max_length price_history
+  def sale_has_lasted_max_length price_history # needs more test cases?
   	pre_sale_price_history = price_history[0..price_history.count - 1 - STABLE]
   	stable?(pre_sale_price_history) 
   end
