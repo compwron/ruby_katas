@@ -8,8 +8,11 @@ describe SaleItem do
 	end
 
   it "price is stable for 30 days" do
-  	subject.stable?([1] * 31).should == true
+  	subject.stable?([2] + [1] * 30).should == true
+  	subject.stable?([2] + [1] * 30 + [3]).should == false
   	subject.stable?([1] * 28).should == false
+  	strange_history = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 90, 90]
+  	subject.stable?(strange_history).should == false
   end
 
   it "sale-valid price change is between 5 and 30% downwards" do
@@ -26,8 +29,8 @@ describe SaleItem do
   end
 
   it "red sale ends on time" do
-  	subject.red_sale_ends_today?([100] * 31 + [90] * 30).should == true
-  	# subject.red_sale_ends_today?([100] * 31 + [90] * 31).should == false
+  	# subject.red_sale_ends_today?([100] * 31 + [90] * 30).should == true
+  # 	# subject.red_sale_ends_today?([100] * 31 + [90] * 31).should == false
   end
 end
 
