@@ -31,18 +31,19 @@ class SaleItem
   	price_history.last > price_history[-2] ? true : false
   end
 
+  def price_decreases_below_threshhold
+  end
+
   def find_price_before_sale price_history
 		threshhold = get_most_recent_stable_price price_history
-		threshhold_value = price_history[threshhold]
-		
+		# threshhold_value = price_history[threshhold]
+
 		lowest_valid_sale_price = BOTTOM_SALE_PRICE_PERCENTAGE * threshhold
 
 		if valid_red_sale_start?(price_history[threshhold + 1])
 			(threshhold + 1).upto(price_history.last).each {|i|
 				return true if price_history[i] >= lowest_valid_sale_price
 			}
-		# else 
-			# false
 		end
 		# find the original increase
 		# - by, starting at the 30th value, checking for stability and incrementing until it is found
@@ -51,13 +52,13 @@ class SaleItem
 
   end
 
-  def get_most_recent_stable_price price_history
+  def get_position_of_most_recent_stable_price price_history
   	threshhold = 0
   	length_of_history = price_history.length - 1
 		(STABLE - 1).upto(length_of_history).each {|i|
-			if stable?(price_history[0..i]) then return price_history[i] end
+			if stable?(price_history[0..i]) then threshhold = i end
 		}
-		0
+		threshhold
   end
 
   def sale_has_lasted_max_length price_history
