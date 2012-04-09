@@ -10,7 +10,7 @@ describe SaleItem do
   	@too_short_to_be_stable_hist = [1] * 28
 
   	@valid_decrease = [100] * 31 + [90]
-  	@not_large_enough_decrease = [100] * 31 + [99]
+  	@too_small_decrease = [100] * 31 + [99]
   	@too_large_decrease = [100] * 31 + [50]
 
   	@lowest_valid_decrease = [100] * 30 + [70]
@@ -25,8 +25,6 @@ describe SaleItem do
 
   	@too_large_decrease_during_sale = [100] * 30 + [90] * 25 + [50]
   	@valid_decrease_during_sale = [100] * 30 + [90] * 25 + [89]
-
-  	@stable_then_unstable_hist_with_valid_decrease = [101] + [100] * 30 + [90]
   end
 
   context "price" do
@@ -38,7 +36,7 @@ describe SaleItem do
 	  
 	  it "decrease is valid when it is between 5 and 30% downwards" do
   		subject.valid_decrease?(@valid_decrease).should == true
-  		subject.valid_decrease?(@not_large_enough_decrease).should == false
+  		subject.valid_decrease?(@too_small_decrease).should == false
   		subject.valid_decrease?(@too_large_decrease).should == false
   	end
 	end
@@ -67,8 +65,8 @@ describe SaleItem do
 	  end
 
 	  it "is ended immediately by price decrease to below 30% of original price" do
-	  	subject.price_decreases_below_threshhold?(@too_large_decrease_during_sale).should == true
-	  	subject.price_decreases_below_threshhold?(@valid_decrease_during_sale).should == false
+	  	subject.price_decreases_below_threshold?(@too_large_decrease_during_sale).should == true
+	  	subject.price_decreases_below_threshold?(@valid_decrease_during_sale).should == false
 	  	
 	  	subject.red_sale_ends_today?(@valid_decrease_during_sale).should == false
 	  	subject.red_sale_ends_today?(@too_large_decrease_during_sale).should == true
@@ -77,6 +75,5 @@ describe SaleItem do
 	
 	it "find most recent stable price" do
 		subject.get_position_of_most_recent_stable_price(@valid_decrease).should == 30
-  	subject.get_position_of_most_recent_stable_price(@stable_then_unstable_hist_with_valid_decrease).should == 30
 	end
 end
