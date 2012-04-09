@@ -43,12 +43,7 @@ describe SaleItem do
 
 	  it "is ended immediately by price decrease to below 30% of original price" do
 	  	subject.price_decreases_below_threshhold?([100] * 30 + [90] * 25 + [50]).should == true
-	  	# subject.price_decreases_below_threshhold?([101] * 30 + [100] * 30 + [90]).should == false
-
-	  	# subject.find_price_before_sale([100] * 30 + [90] * 25 + [89]).should == 100
-	  	# subject.price_decreases_below_threshhold([100] * 30 + [90] * 25 + [89]).should == false
-
-	  	# subject.price_decreases_below_threshhold([100] * 30 + [90] * 25 + [69]).should == true
+	  	subject.price_decreases_below_threshhold?([100] * 30 + [90] * 25 + [89]).should == false
 	  end
 	end
 	
