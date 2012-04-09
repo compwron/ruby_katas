@@ -23,7 +23,7 @@ class SaleItem
 
   def red_sale_ends_today? price_history
   	return true unless sale_ends_if_price_increases(price_history) == false
-  	# return true unless price_decreases_below_threshhold(price_history) == false
+  	return true unless price_decreases_below_threshhold?(price_history) == false
   	sale_has_lasted_max_length(price_history)
   end	
 
@@ -37,7 +37,7 @@ class SaleItem
 			threshhold.upto(price_history.length - 1).map {|i|
 				return true if price_history[i] <= lowest_valid_sale_price
 			}
-			false
+		false
   end
 
   def get_position_of_most_recent_stable_price price_history
