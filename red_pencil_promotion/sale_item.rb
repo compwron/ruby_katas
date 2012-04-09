@@ -27,10 +27,9 @@ class SaleItem
 
   end 
 
-  # def red_sale_ends_today? price_history
-  # 	pre_sale_price_history = price_history[0..price_history.length-30]
-  # 	# p pre_sale_price_history
-  # 	stable?(price_history) && stable?(pre_sale_price_history)
-  # end	
+  def red_sale_ends_today? price_history
+  	pre_sale_price_history = price_history[0..price_history.length - 1 - STABLE]
+  	stable?(price_history) && stable?(pre_sale_price_history)
+  end	
 
 end

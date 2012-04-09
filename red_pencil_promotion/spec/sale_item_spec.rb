@@ -29,8 +29,8 @@ describe SaleItem do
   end
 
   it "red sale ends on time" do
-  	# subject.red_sale_ends_today?([100] * 31 + [90] * 30).should == true
-  # 	# subject.red_sale_ends_today?([100] * 31 + [90] * 31).should == false
+  	subject.red_sale_ends_today?([100] * 31 + [90] * 30).should == true
+  	subject.red_sale_ends_today?([100] * 31 + [90] * 31).should == false
   end
 end
 
