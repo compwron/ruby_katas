@@ -19,7 +19,14 @@ describe SaleItem do
   	@last_day_of_red_sale = [100] * 31 + [90] * 30
   	@red_sale_ended_yesterday = [100] * 31 + [90] * 31
 
-  	@price_reduced_during_sale = [100] * 30 + [90] * 29 + [80]
+  	@price_reduced_on_last_day_of_sale = [100] * 30 + [90] * 29 + [80]
+  	@price_increased_during_sale = [100] * 30 + [90] * 25 + [91]
+  	@price_reduced_during_sale = [100] * 30 + [90] * 28 + [89]
+
+  	@too_large_decrease_during_sale = [100] * 30 + [90] * 25 + [50]
+  	@valid_decrease_during_sale = [100] * 30 + [90] * 25 + [89]
+
+  	@stable_then_unstable_hist_with_valid_decrease = [101] + [100] * 30 + [90]
   end
 
   context "price" do
@@ -50,30 +57,26 @@ describe SaleItem do
 	  end
 
 	  it "is not prolonged by reduction during sale" do
-	  	subject.red_sale_ends_today?(@price_reduced_during_sale).should == true
+	  	subject.red_sale_ends_today?(@price_reduced_on_last_day_of_sale).should == true
 	  end
 
 	  it "is ended immediately by price increase" do
-	  	subject.red_sale_ends_today?([100] * 30 + [90] * 25 + [91]).should == true
-	  	subject.red_sale_ends_today?([100] * 30 + [90] * 28 + [89]).should == false
-	  	subject.red_sale_ends_today?([100] * 30 + [90] * 29 + [89]).should == true
+	  	subject.red_sale_ends_today?(@price_increased_during_sale).should == true
+	  	subject.red_sale_ends_today?(@price_reduced_during_sale).should == false
+	  	subject.red_sale_ends_today?(@price_reduced_on_last_day_of_sale).should == true
 	  end
 
 	  it "is ended immediately by price decrease to below 30% of original price" do
-	  	subject.price_decreases_below_threshhold?([100] * 30 + [90] * 25 + [50]).should == true
-	  	subject.price_decreases_below_threshhold?([100] * 30 + [90] * 25 + [89]).should == false
+	  	subject.price_decreases_below_threshhold?(@too_large_decrease_during_sale).should == true
+	  	subject.price_decreases_below_threshhold?(@valid_decrease_during_sale).should == false
 	  	
-	  	subject.red_sale_ends_today?([100] * 30 + [90] * 25 + [89]).should == false
-	  	subject.red_sale_ends_today?([100] * 30 + [90] * 25 + [50]).should == true
+	  	subject.red_sale_ends_today?(@valid_decrease_during_sale).should == false
+	  	subject.red_sale_ends_today?(@too_large_decrease_during_sale).should == true
 	  end
 	end
 	
 	it "find most recent stable price" do
-		subject.get_position_of_most_recent_stable_price([100] * 30 + [90]).should == 29
-  	subject.get_position_of_most_recent_stable_price([101] + [100] * 30 + [90]).should == 30
-  	subject.get_position_of_most_recent_stable_price([101] * 30 + [100] * 30 + [90]).should == 59
+		subject.get_position_of_most_recent_stable_price(@valid_decrease).should == 30
+  	subject.get_position_of_most_recent_stable_price(@stable_then_unstable_hist_with_valid_decrease).should == 30
 	end
-
-
 end
-
