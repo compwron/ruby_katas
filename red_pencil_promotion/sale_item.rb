@@ -55,7 +55,7 @@ class SaleItem
   def beginning_of_stability_position price_history
     max_unstable_offset = price_history.length - MINIMUM_HISTORY_FOR_VALID_SECOND_SALE
     (0..max_unstable_offset).each do |position|
-      return position + 1 if stable?(price_history[position..position + STABLE]) # off by 1 error?
+      return real_position(price_history, position) if stable?(price_history[position..position + STABLE]) # off by 1 error?
     end
     0 # if there is no instability, stability starts at 0
   end
@@ -84,9 +84,13 @@ class SaleItem
     price_history.length - 1
   end
 
+  def real_position price_history, position
+    position + 1
+  end
+
   def position_of_most_recent_stable_price price_history
     STABLE_LOCATION.upto(length_of_history(price_history)).each do |position|
-      return position + 1 if stable?(price_history[0..position]) # off by 1 error?
+      return real_position(price_history, position) if stable?(price_history[0..position]) # off by 1 error?
     end
   end
 
