@@ -34,22 +34,20 @@ class SaleItem
     # make an array which holds the points in the array during which there was a red sale 
     # {price_history => [{:red_sale => [30..60], :stable => [0..29], [61..89]}]}
     return false unless price_history.length >= 90
-    stable?(price_history[0..STABLE_LOCATION]) && 
-      stable?(price_history[STABLE_LOCATION..STABLE*2]) && 
-        stable?(price_history[STABLE*2..STABLE*3 -1]) && 
+    i = beginning_of_stability_position(price_history)
+    stable?(price_history[i..STABLE_LOCATION + i]) && 
+      stable?(price_history[i + STABLE_LOCATION..STABLE*2 + i]) && 
+        stable?(price_history[STABLE*2 + i..STABLE*3 -1 + i]) && 
           valid_decrease?(price_history)
   end
 
   def beginning_of_stability_position price_history
     max_unstable_offset = price_history.length - 90
-    beginning_of_stability  = nil
+    beginning_of_stability  = 0
     (0..max_unstable_offset).each {|i|
       beginning_of_stability = i + 1 if stable?(price_history[i..i + STABLE])
     }
     beginning_of_stability
-      # stable?(price_history[STABLE_LOCATION..STABLE*2]) && 
-        # stable?(price_history[STABLE*2..STABLE*3 -1]) && 
-          # valid_decrease?(price_history)
   end
 
   def red_sale_ends_today? price_history
