@@ -4,6 +4,8 @@ class SaleItem
   TOP_SALE_PRICE_PERCENTAGE = 0.95
   BOTTOM_SALE_PRICE_PERCENTAGE = 0.70
   SECOND_MOST_RECENT_ARRAY_LOCATION = -2
+  STABILITY_PLUS_SALE = 60
+  MINIMUM_HISTORY_FOR_VALID_SECOND_SALE = STABLE + STABILITY_PLUS_SALE
 
   def stable? price_history
     most_recent_price = price_history.last
@@ -15,14 +17,14 @@ class SaleItem
 
   def valid_decrease? price_history
     price_history.last <= price_history[SECOND_MOST_RECENT_ARRAY_LOCATION] * TOP_SALE_PRICE_PERCENTAGE && 
-      price_history.last >= price_history[-2] * BOTTOM_SALE_PRICE_PERCENTAGE ? 
+      price_history.last >= price_history[SECOND_MOST_RECENT_ARRAY_LOCATION] * BOTTOM_SALE_PRICE_PERCENTAGE ? 
         true : false
   end
 
   def valid_red_sale_start? price_history
     yesterday_hist = price_history_yesterday(price_history)
     valid = valid_decrease?(price_history) && stable?(yesterday_hist) 
-    price_history.length >= 60 ? (no_overlap_with_previous_sale(price_history) && valid) : valid
+    price_history.length >= STABILITY_PLUS_SALE ? (no_overlap_with_previous_sale(price_history) && valid) : valid
   end 
 
   def price_history_yesterday price_history
@@ -33,7 +35,7 @@ class SaleItem
   def no_overlap_with_previous_sale price_history
     # make an array which holds the points in the array during which there was a red sale 
     # {price_history => [{:red_sale => [30..60], :stable => [0..29], [61..89]}]}
-    return false unless price_history.length >= 90
+    return false unless price_history.length >= MINIMUM_HISTORY_FOR_VALID_SECOND_SALE
     i = beginning_of_stability_position(price_history)
     unstable_offset = between_sale_unstable_offset(price_history)
 
