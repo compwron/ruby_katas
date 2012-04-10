@@ -104,9 +104,9 @@ describe SaleItem do
     
     @unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] + [90] * 30 + [81]
     @longer_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 5 + [90] * 30 + [81]
-    @suer_long_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 90 + [90] * 30 + [81]
+    @super_long_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 57 + [90] * 30 + [81] # fails at 58 and up
     subject.valid_red_sale_start?(@unstable_between_red_sales).should == true
     subject.valid_red_sale_start?(@longer_unstable_between_red_sales).should == true
-    # subject.valid_red_sale_start?(@suer_long_unstable_between_red_sales).should == true
+    subject.valid_red_sale_start?(@super_long_unstable_between_red_sales).should == true
   end
 end
