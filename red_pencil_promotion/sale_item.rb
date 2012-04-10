@@ -5,7 +5,7 @@ class SaleItem
   BOTTOM_SALE_PRICE_PERCENTAGE = 0.70
   SECOND_MOST_RECENT_ARRAY_LOCATION = -2
   STABILITY_PLUS_SALE = 60
-  MINIMUM_HISTORY_FOR_VALID_SECOND_SALE = STABLE + STABILITY_PLUS_SALE
+  MINIMUM_HISTORY_FOR_VALID_SECOND_SALE = STABLE + STABILITY_PLUS_SALE #90
 
   def stable? price_history
     most_recent_price = price_history.last
@@ -55,12 +55,11 @@ class SaleItem
   end
 
   def beginning_of_stability_position price_history
-    max_unstable_offset = price_history.length - 90
-    beginning_of_stability  = 0
-    (0..max_unstable_offset).each {|i|
-      beginning_of_stability = i + 1 if stable?(price_history[i..i + STABLE])
+    max_unstable_offset = price_history.length - MINIMUM_HISTORY_FOR_VALID_SECOND_SALE
+    (0..max_unstable_offset).each {|position|
+      return position + 1 if stable?(price_history[position..position + STABLE]) # off by one error?
     }
-    beginning_of_stability
+    0 # if there is no instability, stability starts at 0
   end
 
   def red_sale_ends_today? price_history
