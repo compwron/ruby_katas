@@ -47,11 +47,11 @@ class SaleItem
   end
 
   def between_sale_unstable_offset price_history
-    # max unstable offset is today minus 1 minus 30, vs beginning of time + beginning_of_stability_position + 60
-    today = 1
-    first_stability = beginning_of_stability_position(price_history)
-    unstable_offset = price_history.length - STABLE - 2 * STABLE - first_stability - today
-    unstable_offset
+    today = 1 # how long does today last? Just one price. 
+    start_of_first_stability = beginning_of_stability_position(price_history)
+    stability_before_second_sale = STABLE
+
+    unstable_offset = price_history.length - start_of_first_stability - STABILITY_PLUS_SALE - stability_before_second_sale - today
   end
 
   def beginning_of_stability_position price_history
