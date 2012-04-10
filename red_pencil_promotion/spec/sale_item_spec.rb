@@ -26,9 +26,13 @@ describe SaleItem do
     @too_large_decrease_during_sale = [100] * 30 + [90] * 25 + [50]
     @valid_decrease_during_sale = [100] * 30 + [90] * 25 + [89]
 
+    # second sales
     @valid_second_sale = [100] * 30 + [90] * 30 + [90] * 30 + [81]
     @invalid_second_sale = [100] * 30 + [90] * 30 + [81]
     @valid_second_sale_history_preceeded_by_instability = [2] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
+    @stable_from_beginning = [100] * 30 + [90] * 30 + [90] * 30 + [81]
+    @stable_at_1 = [2] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
+    @stable_at_2 = [2] + [14] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
   end
 
   context "price" do
@@ -81,18 +85,20 @@ describe SaleItem do
     subject.position_of_most_recent_stable_price(@valid_decrease).should == 30
   end
 
+  it "second red sale is valid if it is preceeded by a period of stability which does not overlap with the previous red sale" do
+    subject.no_overlap_with_previous_sale(@stable_from_beginning)
+  end
+
   it "second red sale must follow a stable period which does not intersect with a previous red sale" do
     subject.valid_red_sale_start?(@valid_second_sale).should == true
     subject.valid_red_sale_start?(@invalid_second_sale).should == false
-    # subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
+    subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
   end
 
   it "second red sale should be valid when the history includes valid instabilities" do
     # subject.triply_stable?(@valid_second_sale_history_preceeded_by_instability).should == false
 
-    @stable_from_beginning = [100] * 30 + [90] * 30 + [90] * 30 + [81]
-    @stable_at_1 = [2] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
-    @stable_at_2 = [2] + [14] + [100] * 30 + [90] * 30 + [90] * 30 + [81]
+    
     subject.beginning_of_stability_position(@stable_from_beginning).should == 0
     subject.beginning_of_stability_position(@stable_at_1).should == 1
     subject.beginning_of_stability_position(@stable_at_2).should == 2
