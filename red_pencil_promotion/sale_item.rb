@@ -9,10 +9,10 @@ class SaleItem
 
   def stable? price_history
     most_recent_price = price_history.last
-    1.upto(STABLE_LOCATION).inject(true) {|no_false_so_far, i|
+    1.upto(STABLE_LOCATION).inject(true) do |no_false_so_far, i|
       price_history.pop
       no_false_so_far && price_history.last == most_recent_price
-    }
+    end
   end
 
   def valid_decrease? price_history
@@ -33,8 +33,6 @@ class SaleItem
   end
 
   def no_overlap_with_previous_sale price_history
-    # make an array which holds the points in the array during which there was a red sale 
-    # {price_history => [{:red_sale => [30..60], :stable => [0..29], [61..89]}]}
     return false unless price_history.length >= MINIMUM_HISTORY_FOR_VALID_SECOND_SALE
     i = beginning_of_stability_position(price_history)
     unstable_offset = between_sale_unstable_offset(price_history)
@@ -56,9 +54,9 @@ class SaleItem
 
   def beginning_of_stability_position price_history
     max_unstable_offset = price_history.length - MINIMUM_HISTORY_FOR_VALID_SECOND_SALE
-    (0..max_unstable_offset).each {|position|
-      return position + 1 if stable?(price_history[position..position + STABLE]) # off by one error?
-    }
+    (0..max_unstable_offset).each do |position|
+      return position + 1 if stable?(price_history[position..position + STABLE]) # off by 1 error?
+    end
     0 # if there is no instability, stability starts at 0
   end
 
@@ -87,9 +85,8 @@ class SaleItem
   end
 
   def position_of_most_recent_stable_price price_history
-    
-    STABLE_LOCATION.upto(length_of_history(price_history)).each do |i|
-      return i + 1 if stable?(price_history[0..i]) # off by 1 error?
+    STABLE_LOCATION.upto(length_of_history(price_history)).each do |position|
+      return position + 1 if stable?(price_history[0..position]) # off by 1 error?
     end
   end
 
