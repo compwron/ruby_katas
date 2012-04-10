@@ -85,28 +85,31 @@ describe SaleItem do
     subject.position_of_most_recent_stable_price(@valid_decrease).should == 30
   end
 
-  it "second red sale is valid if it is preceeded by a period of stability which does not overlap with the previous red sale" do
-    subject.no_overlap_with_previous_sale(@stable_from_beginning)
-  end
+  context "second red sale" do
+    it "is valid if it is preceeded by a period of stability which does not overlap with the previous red sale" do
+      subject.no_overlap_with_previous_sale(@stable_from_beginning)
+    end
 
-  it "second red sale must follow a stable period which does not intersect with a previous red sale" do
-    subject.valid_red_sale_start?(@valid_second_sale).should == true
-    subject.valid_red_sale_start?(@invalid_second_sale).should == false
-    subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
-  end
+    it "must follow a stable period which does not intersect with a previous red sale" do
+      subject.valid_red_sale_start?(@valid_second_sale).should == true
+      subject.valid_red_sale_start?(@invalid_second_sale).should == false
+      subject.valid_red_sale_start?(@valid_second_sale_history_preceeded_by_instability).should == true
+    end
 
-  it "second red sale should be valid when the history includes valid instabilities" do
-    # subject.triply_stable?(@valid_second_sale_history_preceeded_by_instability).should == false
+    it "should be valid when the history starts with valid instabilities" do
+      subject.beginning_of_stability_position(@stable_from_beginning).should == 0
+      subject.beginning_of_stability_position(@stable_at_1).should == 1
+      subject.beginning_of_stability_position(@stable_at_2).should == 2
+    end
 
-    subject.beginning_of_stability_position(@stable_from_beginning).should == 0
-    subject.beginning_of_stability_position(@stable_at_1).should == 1
-    subject.beginning_of_stability_position(@stable_at_2).should == 2
-    
-    @unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] + [90] * 30 + [81]
-    @longer_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 5 + [90] * 30 + [81]
-    @super_long_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 57 + [90] * 30 + [81] # fails at 58 and up
-    subject.valid_red_sale_start?(@unstable_between_red_sales).should == true
-    subject.valid_red_sale_start?(@longer_unstable_between_red_sales).should == true
-    subject.valid_red_sale_start?(@super_long_unstable_between_red_sales).should == true
+    it "should be valid when unstable period is between first sale and second stability" do
+      unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] + [90] * 30 + [81]
+      longer_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 5 + [90] * 30 + [81]
+      super_long_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 57 + [90] * 30 + [81] # fails at 58 and up
+      
+      subject.valid_red_sale_start?(unstable_between_red_sales).should == true
+      subject.valid_red_sale_start?(longer_unstable_between_red_sales).should == true
+      subject.valid_red_sale_start?(super_long_unstable_between_red_sales).should == true
+    end
   end
 end
