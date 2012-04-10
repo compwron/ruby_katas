@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require_relative "../sale_item.rb"
 
 describe SaleItem do
