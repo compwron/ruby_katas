@@ -76,15 +76,19 @@ class SaleItem
     last_stable_position = position_of_most_recent_stable_price(price_history)
     lowest_valid_sale_price = BOTTOM_SALE_PRICE_PERCENTAGE * price_history[last_stable_position]
     
-    last_stable_position.upto(price_history.length - 1).each do |i|
+    last_stable_position.upto(length_of_history(price_history)).each do |i|
       return true if price_history[i] <= lowest_valid_sale_price
     end
     false
   end
 
+  def length_of_history price_history
+    price_history.length - 1
+  end
+
   def position_of_most_recent_stable_price price_history
-    length_of_history = price_history.length - 1
-    STABLE_LOCATION.upto(length_of_history).each do |i|
+    
+    STABLE_LOCATION.upto(length_of_history(price_history)).each do |i|
       return i + 1 if stable?(price_history[0..i]) # off by 1 error?
     end
   end
