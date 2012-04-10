@@ -38,14 +38,18 @@ class SaleItem
     unstable_offset = between_sale_unstable_offset(price_history)
 
     stable?(price_history[i..STABLE_LOCATION + i]) && # first period of stability
-      stable?(price_history[i + STABLE_LOCATION..STABLE*2 + i]) && # first red sale
+      stable?(price_history[i + STABLE_LOCATION..STABLE_LOCATION*2 + 1 + i]) && # first red sale
       # this is where the valid between-sale stability could be
         stable?(price_history[STABLE*2 + i + unstable_offset..STABLE*3 -1 + i + unstable_offset]) && # second period of stability
           valid_decrease?(price_history)
   end
 
   def between_sale_unstable_offset price_history
-    0
+    # max unstable offset is today minus 1 minus 30, vs beginning of time + beginning_of_stability_position + 60
+    today = 1
+    first_stability = beginning_of_stability_position(price_history)
+    unstable_offset = price_history.length - STABLE - 2 * STABLE - first_stability - today
+    unstable_offset
   end
 
   def beginning_of_stability_position price_history
