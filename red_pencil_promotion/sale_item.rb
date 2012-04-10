@@ -7,10 +7,10 @@ class SaleItem
 
   def stable? price_history
   	most_recent_price = price_history.last
-  	!1.upto(STABLE_LOCATION).map {|i|
+  	1.upto(STABLE_LOCATION).inject(true) {|no_false_so_far, i|
   		price_history.pop
-  		price_history.last == most_recent_price
-  	}.include?(false)
+  		no_false_so_far && price_history.last == most_recent_price
+  	}
   end
 
   def valid_decrease? price_history
@@ -31,6 +31,10 @@ class SaleItem
   end
 
   def no_overlap_with_previous_sale price_history
+  	# make an array which holds the points in the array during which there was a red sale 
+  	# {price_history => [{:red_sale => [30..60], :stable => [0..29], [61..89]}]}
+
+
   	return false unless price_history.length >= 90
 		stable?(price_history[0..STABLE_LOCATION]) && 
 			stable?(price_history[STABLE_LOCATION..STABLE*2]) && 
