@@ -35,10 +35,17 @@ class SaleItem
     # {price_history => [{:red_sale => [30..60], :stable => [0..29], [61..89]}]}
     return false unless price_history.length >= 90
     i = beginning_of_stability_position(price_history)
-    stable?(price_history[i..STABLE_LOCATION + i]) && 
-      stable?(price_history[i + STABLE_LOCATION..STABLE*2 + i]) && 
-        stable?(price_history[STABLE*2 + i..STABLE*3 -1 + i]) && 
+    unstable_offset = between_sale_unstable_offset(price_history)
+
+    stable?(price_history[i..STABLE_LOCATION + i]) && # first period of stability
+      stable?(price_history[i + STABLE_LOCATION..STABLE*2 + i]) && # first red sale
+      # this is where the valid between-sale stability could be
+        stable?(price_history[STABLE*2 + i + unstable_offset..STABLE*3 -1 + i + unstable_offset]) && # second period of stability
           valid_decrease?(price_history)
+  end
+
+  def between_sale_unstable_offset price_history
+    0
   end
 
   def beginning_of_stability_position price_history

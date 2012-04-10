@@ -98,18 +98,14 @@ describe SaleItem do
   it "second red sale should be valid when the history includes valid instabilities" do
     # subject.triply_stable?(@valid_second_sale_history_preceeded_by_instability).should == false
 
-    
     subject.beginning_of_stability_position(@stable_from_beginning).should == 0
     subject.beginning_of_stability_position(@stable_at_1).should == 1
     subject.beginning_of_stability_position(@stable_at_2).should == 2
     
-    # @unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] + [90] * 30 + [81]
-    # @longer_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 5 + [90] * 30 + [81]
+    @unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] + [90] * 30 + [81]
+    @longer_unstable_between_red_sales = [100] * 30 + [90] * 30 + [2] * 5 + [90] * 30 + [81]
     # subject.valid_red_sale_start?(@unstable_between_red_sales).should == true
-
-
   end
-
 end
 
 
