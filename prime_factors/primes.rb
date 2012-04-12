@@ -2,11 +2,11 @@ require 'mathn'
 
 class Primes
   def primes num
-    num ==1 ? [] : num.prime? ? [num] : prime_factors(num)
+    num == 1 ? [] : num.prime? ? [num] : prime_factors(num)
   end
 
   def prime_factors num
-    factors(num).select {|factor| factor.prime?}.map {|prime_factor|
+    factors(num).select {|factor| factor.prime? }.map {|prime_factor|
       (num / prime_factor) % prime_factor == 0 ? repeated_factors(num, prime_factor) : prime_factor
     }.flatten
   end
