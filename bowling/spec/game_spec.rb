@@ -15,6 +15,13 @@ describe Game do
   	@game = not_first_frame(@game, 2, 8, 6)
 	end
 
+  it "complete game" do
+    strike = Roll.new(1, 10)
+    spare = Frame.new(Roll.new(1, 5), Roll.new(2, 5))
+    frames = Frame.new(strike), spare, .... 8 more)
+    game = Game.new(frames)
+  end
+
   it "first frame" do
   	score = 5
   	frame = 1
